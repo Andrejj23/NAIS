@@ -18,6 +18,10 @@ public class Course{
 
     private Boolean isActive;
 
+    private String type;
+
+    private int espb;
+
     public Course(){
     }
     
@@ -43,6 +47,22 @@ public class Course{
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public int getEspb(){
+        return espb;
+    }
+
+    public void setEspb(int espb){
+        this.espb=espb;
     }
 
 }

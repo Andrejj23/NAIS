@@ -22,6 +22,12 @@ public class Student {
 
     private String email;
 
+    private int yearOfStudy;
+
+    private String methodOfFinancing;
+
+    private int numberOfEnrollingYear;
+
     @Relationship(value = "COMPLETED", direction = Relationship.Direction.OUTGOING)
     private List<CompletedCourse> completed = new ArrayList<>();
 
@@ -86,6 +92,30 @@ public class Student {
 
     public void addCompletedCourse(CompletedCourse completedCourse){
         this.completed.add(completedCourse);
+    }
+
+    public int getYearOfStudy(){
+        return yearOfStudy;
+    }
+
+    public void setYearOfStudy(int yearOfStudy){
+        this.yearOfStudy = yearOfStudy;
+    }
+
+    public String getMethodOfFinancing(){
+        return methodOfFinancing;
+    }
+
+    public void setMethodOfFinancing(String methodOfFinancing){
+        this.methodOfFinancing = methodOfFinancing;
+    }
+
+    public int getNumberOfEnrollingYear(){
+        return numberOfEnrollingYear;
+    }
+
+    public void setNumberOfEnrollingYear(int numberOfEnrollingYear){
+        this.numberOfEnrollingYear = numberOfEnrollingYear;
     }
 
 

@@ -22,6 +22,12 @@ public class Teacher {
     private String lastName;
 
     private String email;
+    //Assistant Professor, Associate Professor, Full Professor
+    private String position;
+
+    private String organizationalUnit;
+
+
 
     /*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;*/
@@ -65,6 +71,22 @@ public class Teacher {
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public String getPosition(){
+        return position;
+    }
+
+    public void setPosition(String position){
+        this.position = position;
+    }
+
+    public String getOrganizationalUnit(){
+        return organizationalUnit;
+    }
+
+    public void setOrganizationalUnit(String organizationalUnit){
+        this.organizationalUnit = organizationalUnit;
     }
 
     /*public Date getBirthDate(){

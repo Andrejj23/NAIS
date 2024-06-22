@@ -68,37 +68,37 @@ SET review.rating = toInteger(rand() * 5) + 1
 
 
 
-CREATE (:Student {index: "IN1-2020", firstName: "Ime1", lastName: "Prz1", email: "john.doe@example.com"}),
-       (:Student {index: "IN2-2020", firstName: "Ime2", lastName: "Prz2", email: "jane.smith@example.com"}),
-       (:Student {index: "IN3-2020", firstName: "Ime3", lastName: "Prz3", email: "alice.johnson@example.com"}),
-       (:Student {index: "IN4-2020", firstName: "Ime4", lastName: "Prz4", email: "bob.williams@example.com"}),
-       (:Student {index: "IN5-2020", firstName: "Ime5", lastName: "Prz5", email: "eve.brown@example.com"}),
-       (:Student {index: "IN6-2020", firstName: "Ime6", lastName: "Prz6", email: "michael.davis@example.com"}),
-       (:Student {index: "IN7-2020", firstName: "Ime7", lastName: "Prz7", email: "emily.miller@example.com"}),
-       (:Student {index: "IN8-2020", firstName: "Ime8", lastName: "Prz8", email: "david.wilson@example.com"}),
-       (:Student {index: "IN9-2020", firstName: "Ime9", lastName: "Prz9", email: "sarah.martinez@example.com"}),
-       (:Student {index: "IN10-2020", firstName: "Ime10", lastName: "Prz10", email: "chris.anderson@example.com"}),
-       (:Student {index: "IN11-2020", firstName: "Ime11", lastName: "Prz11", email: "olivia.taylor@example.com"}),
-       (:Student {index: "IN12-2020", firstName: "Ime12", lastName: "Prz12", email: "william.garcia@example.com"}),
-       (:Student {index: "IN13-2020", firstName: "Ime13", lastName: "Prz13", email: "sophia.rodriguez@example.com"}),
-       (:Student {index: "IN14-2020", firstName: "Ime14", lastName: "Prz14", email: "james.lopez@example.com"}),
-       (:Student {index: "IN15-2020", firstName: "Ime15", lastName: "Prz15", email: "emma.hernandez@example.com"}),
-       (:Student {index: "IN16-2020", firstName: "Ime16", lastName: "Prz16", email: "matthew.gonzalez@example.com"}),
-       (:Student {index: "IN17-2020", firstName: "Ime17", lastName: "Prz17", email: "isabella.perez@example.com"}),
-       (:Student {index: "IN18-2020", firstName: "Ime18", lastName: "Prz18", email: "daniel.moore@example.com"}),
-       (:Student {index: "IN19-2020", firstName: "Ime19", lastName: "Prz19", email: "ava.taylor@example.com"}),
-       (:Student {index: "IN20-2020", firstName: "Ime20", lastName: "Prz20", email: "alexander.king@example.com"}),
-       (:Student {index: "IN21-2020", firstName: "Ime21", lastName: "Prz21", email: "mihael@example.com"})
+CREATE (:Student {index: "IN1-2020", firstName: "Ime1", lastName: "Prz1", email: "john.doe@example.com", yearOfStudy:3, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN2-2020", firstName: "Ime2", lastName: "Prz2", email: "jane.smith@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
+       (:Student {index: "IN3-2020", firstName: "Ime3", lastName: "Prz3", email: "alice.johnson@example.com", yearOfStudy:1, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN4-2020", firstName: "Ime4", lastName: "Prz4", email: "bob.williams@example.com", yearOfStudy:2, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
+       (:Student {index: "IN5-2020", firstName: "Ime5", lastName: "Prz5", email: "eve.brown@example.com", yearOfStudy:3, methodOfFinancing:"BUDGET", numberOfEnrollingYear:2}),
+       (:Student {index: "IN6-2020", firstName: "Ime6", lastName: "Prz6", email: "michael.davis@example.com", yearOfStudy:3, methodOfFinancing:"SELF", numberOfEnrollingYear:2}),
+       (:Student {index: "IN7-2020", firstName: "Ime7", lastName: "Prz7", email: "emily.miller@example.com", yearOfStudy:4, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN8-2020", firstName: "Ime8", lastName: "Prz8", email: "david.wilson@example.com", yearOfStudy:4, methodOfFinancing:"BUDGET", numberOfEnrollingYear:2}),
+       (:Student {index: "IN9-2020", firstName: "Ime9", lastName: "Prz9", email: "sarah.martinez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
+       (:Student {index: "IN10-2020", firstName: "Ime10", lastName: "Prz10", email: "chris.anderson@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:2}),
+       (:Student {index: "IN11-2020", firstName: "Ime11", lastName: "Prz11", email: "olivia.taylor@example.com", yearOfStudy:2, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN12-2020", firstName: "Ime12", lastName: "Prz12", email: "william.garcia@example.com", yearOfStudy:2, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN13-2020", firstName: "Ime13", lastName: "Prz13", email: "sophia.rodriguez@example.com", yearOfStudy:3, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN14-2020", firstName: "Ime14", lastName: "Prz14", email: "james.lopez@example.com", yearOfStudy:4, methodOfFinancing:"BUDSELFGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN15-2020", firstName: "Ime15", lastName: "Prz15", email: "emma.hernandez@example.com", yearOfStudy:4, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN16-2020", firstName: "Ime16", lastName: "Prz16", email: "matthew.gonzalez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
+       (:Student {index: "IN17-2020", firstName: "Ime17", lastName: "Prz17", email: "isabella.perez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:2}),
+       (:Student {index: "IN18-2020", firstName: "Ime18", lastName: "Prz18", email: "daniel.moore@example.com", yearOfStudy:4, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN19-2020", firstName: "Ime19", lastName: "Prz19", email: "ava.taylor@example.com", yearOfStudy:1, methodOfFinancing:"BUDGET", numberOfEnrollingYear:2}),
+       (:Student {index: "IN20-2020", firstName: "Ime20", lastName: "Prz20", email: "alexander.king@example.com", yearOfStudy:1, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
+       (:Student {index: "IN21-2020", firstName: "Ime21", lastName: "Prz21", email: "mihael@example.com", yearOfStudy:3, methodOfFinancing:"SELF", numberOfEnrollingYear:2})
 
 
-CREATE (:Course {id: 1, description: "opis1", isActive: true}),
-       (:Course {id: 2, description: "opis2", isActive: true}),
-       (:Course {id: 3, description: "opis3", isActive: true}),
-       (:Course {id: 4, description: "opis4", isActive: true}),
-       (:Course {id: 5, description: "opis5", isActive: true}),
-       (:Course {id: 6, description: "opis6", isActive: true}),
-       (:Course {id: 7, description: "opis7", isActive: true}),
-       (:Course {id: 8, description: "opis8", isActive: true})
+CREATE (:Course {id: 1, description: "opis1", isActive: true, type:"OOP", espb:4}),
+       (:Course {id: 2, description: "opis2", isActive: true, type:"MATH", espb:4}),
+       (:Course {id: 3, description: "opis3", isActive: true, type:"AI", espb:2}),
+       (:Course {id: 4, description: "opis4", isActive: true, type:"MATH", espb:4}),
+       (:Course {id: 5, description: "opis5", isActive: true, type:"OOP", espb:2}),
+       (:Course {id: 6, description: "opis6", isActive: true, type:"AI", espb:5}),
+       (:Course {id: 7, description: "opis7", isActive: true, type:"OOP", espb:7}),
+       (:Course {id: 8, description: "opis8", isActive: true, type:"MATH", espb:4})
 
 
 MATCH (s:Student), (c:Course)
@@ -119,21 +119,20 @@ CREATE (s)-[enrolled_in:ENROLLED_IN]->(c)
 set enrolled_in.semester = toInteger(rand()*5)+1
 
 MATCH (s:Student), (c:Course)
-WHERE s.index IN ["IN10-2020", "IN7-2020"] AND c.id IN [5]
-CREATE (s)-[enrolled_in:ENROLLED_IN]->(c)
-set enrolled_in.semester = toInteger(rand()*5)+1
-set enrolled_in.grade = toString(toInteger(rand() * 5) + 6)
-set enrolled_in.status="Completed"
+WHERE s.index IN ["IN10-2020", "IN7-2020"] AND c.id IN [5,3]
+CREATE (s)-[com:COMPLETED]->(c)
+set com.date = "12-04-2020"
+set com.grade = toInteger(rand() * 5) + 6
 
 
-CREATE (:Teacher {id: 1, firstName: "Prof1", lastName: "Prz1", email: "john.doe@example.com"}),
-       (:Teacher {id: 2, firstName: "Prof2", lastName: "Prz2", email: "jane.smith@example.com"}),
-       (:Teacher {id: 3, firstName: "Prof3", lastName: "Prz3", email: "alice.johnson@example.com"}),
-       (:Teacher {id: 4, firstName: "Prof4", lastName: "Prz4", email: "bob.williams@example.com"}),
-       (:Teacher {id: 5, firstName: "Prof5", lastName: "Prz5", email: "eve.brown@example.com"}),
-       (:Teacher {id: 6, firstName: "Prof6", lastName: "Prz6", email: "michael.davis@example.com"}),
-       (:Teacher {id: 7, firstName: "Prof7", lastName: "Prz7", email: "emily.miller@example.com"}),
-       (:Teacher {id: 8, firstName: "Prof8", lastName: "Prz8", email: "david.wilson@example.com"})
+CREATE (:Teacher {id: 1, firstName: "Prof1", lastName: "Prz1", email: "john.doe@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 2, firstName: "Prof2", lastName: "Prz2", email: "jane.smith@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 3, firstName: "Prof3", lastName: "Prz3", email: "alice.johnson@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 4, firstName: "Prof4", lastName: "Prz4", email: "bob.williams@example.com", position: "Associate Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 5, firstName: "Prof5", lastName: "Prz5", email: "eve.brown@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 6, firstName: "Prof6", lastName: "Prz6", email: "michael.davis@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 7, firstName: "Prof7", lastName: "Prz7", email: "emily.miller@example.com", position: "Full Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 8, firstName: "Prof8", lastName: "Prz8", email: "david.wilson@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"})
 
 
 MATCH (t:Teacher), (c:Course)
