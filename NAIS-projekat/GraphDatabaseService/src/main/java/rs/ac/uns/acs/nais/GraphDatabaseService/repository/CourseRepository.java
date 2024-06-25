@@ -4,10 +4,13 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseRecommendationDTO;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Teacher;
-
 import java.util.List;
+
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseDTO;;
 
 @Repository
 public interface CourseRepository extends Neo4jRepository<Course, Long> {
@@ -17,4 +20,26 @@ public interface CourseRepository extends Neo4jRepository<Course, Long> {
 
     @Query("MATCH (p:Program {id: $programId})-[r:CONTAINS]->(c:Course) return c")
     List<Course> findAllByProgram(String programId);
+
+    @Query("MATCH (c:Course) OPTIONAL MATCH (s:Student) - [com:COMPLETED] -> (c) WITH c, count(s) as numStudents WHERE numStudents<$threshold set c.isActive=false return count(c) as updatedCount")
+    int deactivate(int threshold);
+
+
+    @Query("MATCH (s:Student {index: $index})-[:ENROLLED]->(p:Program) " +
+           "WITH s, p " +
+           "MATCH (c:Course) " +
+           "WHERE NOT (s)-[:COMPLETED]->(c) AND NOT (p)-[:CONTAINS]->(c) " +
+           "MATCH (c)<-[r:COMPLETED]-(otherStudent:Student) " +
+           "WITH c, AVG(r.grade) AS avgGrade " +
+           "WHERE avgGrade > 8 " +
+           "RETURN c")
+           List<Course> findRecommendedCourses(String index);
+
+    
+    /*@Query("MATCH (c:Course {id:2}) return c.description AS description")
+    CourseDTO finddd();  */     
+    
+
+
+
 }

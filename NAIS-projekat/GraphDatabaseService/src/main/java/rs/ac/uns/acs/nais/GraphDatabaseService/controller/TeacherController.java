@@ -13,6 +13,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Teacher;
 import rs.ac.uns.acs.nais.GraphDatabaseService.service.impl.TeacherService;
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.TeacherRecommendationDTO;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 
 import java.io.ByteArrayOutputStream;
@@ -79,6 +80,16 @@ public class TeacherController {
     public ResponseEntity<List<Course>> findTeachingCourses(@PathVariable Long id){
         List<Course> courses = teacherService.findTeachingCourses(id);
         return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @GetMapping("recommendTeachers")
+    public ResponseEntity<List<TeacherRecommendationDTO>> getTopTeachersBySuccessRate() {
+        List<TeacherRecommendationDTO> topTeachers = teacherService.recommendTeachersBySuccessRate();
+        if (topTeachers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(topTeachers);
+        }
     }
 
 }

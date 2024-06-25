@@ -1,5 +1,6 @@
 package rs.ac.uns.acs.nais.GraphDatabaseService.service.impl;
 
+import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Teacher;
 import rs.ac.uns.acs.nais.GraphDatabaseService.repository.TeacherRepository;
@@ -7,11 +8,14 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.service.ITeacherService;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 import rs.ac.uns.acs.nais.GraphDatabaseService.repository.CourseRepository;
 import rs.ac.uns.acs.nais.GraphDatabaseService.service.ICourseService;
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.TeacherRecommendationDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.awt.*;
@@ -21,11 +25,13 @@ public class TeacherService implements ITeacherService {
 
     public final TeacherRepository teacherRepository;
     public final CourseRepository courseRepository;
+    private final Neo4jClient neo4jClient;
 
 
-    public TeacherService(TeacherRepository teacherRepository, CourseRepository courseRepository){
+    public TeacherService(TeacherRepository teacherRepository, CourseRepository courseRepository, Neo4jClient neo4jClient){
         this.teacherRepository = teacherRepository;
         this.courseRepository = courseRepository;
+        this.neo4jClient = neo4jClient;
     }
 
     @Override
@@ -84,6 +90,30 @@ public class TeacherService implements ITeacherService {
             return courseRepository.findAllByTeacher(teacher.get().getId());
         }
         return null;
+    }
+
+    @Override
+    public List<TeacherRecommendationDTO> recommendTeachersBySuccessRate() {
+        String cypherQuery = """
+            MATCH (t:Teacher)-[:TEACHING]->(c:Course)<-[:COMPLETED]-(s:Student)
+            WITH t, c, COUNT(s) AS studentsCompleted
+            MATCH (p:Program)-[:CONTAINS]->(c)
+            MATCH (se:Student)-[:ENROLLED]->(p)
+            WITH t, c, studentsCompleted, COUNT(DISTINCT se) AS studentsEnrolled
+            WITH t, AVG(toFloat(studentsCompleted) / studentsEnrolled) AS avgSuccessRate
+            RETURN t.firstName AS teacher, avgSuccessRate
+            ORDER BY avgSuccessRate DESC
+            LIMIT 2
+            """;
+
+        Collection<TeacherRecommendationDTO> result =  neo4jClient.query(cypherQuery)
+                          .fetchAs(TeacherRecommendationDTO.class)
+                          .mappedBy((typeSystem, record) -> new TeacherRecommendationDTO(
+                              record.get("teacher").asString(),
+                              record.get("avgSuccessRate").asDouble()))
+                          .all();
+
+        return new ArrayList<>(result);
     }
 
 }

@@ -38,6 +38,16 @@ public class Student {
     public Student(){
     }
 
+    public Student(String index, String firstName, String lastName, String email, int yearOfStudy, String methodOfFinancing, int numberOfEnrollingYear){
+        this.index = index;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.yearOfStudy = yearOfStudy;
+        this.methodOfFinancing = methodOfFinancing;
+        this.numberOfEnrollingYear = numberOfEnrollingYear;
+    }
+
     public String getIndex(){
         return index;
     }

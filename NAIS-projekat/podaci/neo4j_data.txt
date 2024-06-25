@@ -81,7 +81,7 @@ CREATE (:Student {index: "IN1-2020", firstName: "Ime1", lastName: "Prz1", email:
        (:Student {index: "IN11-2020", firstName: "Ime11", lastName: "Prz11", email: "olivia.taylor@example.com", yearOfStudy:2, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
        (:Student {index: "IN12-2020", firstName: "Ime12", lastName: "Prz12", email: "william.garcia@example.com", yearOfStudy:2, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
        (:Student {index: "IN13-2020", firstName: "Ime13", lastName: "Prz13", email: "sophia.rodriguez@example.com", yearOfStudy:3, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
-       (:Student {index: "IN14-2020", firstName: "Ime14", lastName: "Prz14", email: "james.lopez@example.com", yearOfStudy:4, methodOfFinancing:"BUDSELFGET", numberOfEnrollingYear:1}),
+       (:Student {index: "IN14-2020", firstName: "Ime14", lastName: "Prz14", email: "james.lopez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
        (:Student {index: "IN15-2020", firstName: "Ime15", lastName: "Prz15", email: "emma.hernandez@example.com", yearOfStudy:4, methodOfFinancing:"BUDGET", numberOfEnrollingYear:1}),
        (:Student {index: "IN16-2020", firstName: "Ime16", lastName: "Prz16", email: "matthew.gonzalez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:1}),
        (:Student {index: "IN17-2020", firstName: "Ime17", lastName: "Prz17", email: "isabella.perez@example.com", yearOfStudy:4, methodOfFinancing:"SELF", numberOfEnrollingYear:2}),
@@ -99,6 +99,61 @@ CREATE (:Course {id: 1, description: "opis1", isActive: true, type:"OOP", espb:4
        (:Course {id: 6, description: "opis6", isActive: true, type:"AI", espb:5}),
        (:Course {id: 7, description: "opis7", isActive: true, type:"OOP", espb:7}),
        (:Course {id: 8, description: "opis8", isActive: true, type:"MATH", espb:4})
+
+
+CREATE (:Teacher {id: 1, firstName: "Prof1", lastName: "Prz1", email: "john.doe@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 2, firstName: "Prof2", lastName: "Prz2", email: "jane.smith@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 3, firstName: "Prof3", lastName: "Prz3", email: "alice.johnson@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 4, firstName: "Prof4", lastName: "Prz4", email: "bob.williams@example.com", position: "Associate Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 5, firstName: "Prof5", lastName: "Prz5", email: "eve.brown@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"}),
+       (:Teacher {id: 6, firstName: "Prof6", lastName: "Prz6", email: "michael.davis@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 7, firstName: "Prof7", lastName: "Prz7", email: "emily.miller@example.com", position: "Full Professor", organizationalUnit: "Chair of Applied Computer Science"}),
+       (:Teacher {id: 8, firstName: "Prof8", lastName: "Prz8", email: "david.wilson@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"})
+
+
+CREATE (:Program {id: "IN", name: "Informacioni inzenjering", level: "Undergradute", totalNum: 240, financedNum: 100}),
+       (:Program {id: "RA", name: "Racunarstvo i automatika", level: "Undergradute", totalNum: 60, financedNum: 15}),
+       (:Program {id: "EE", name: "Energetika i telekomunikacije", level: "Undergradute", totalNum: 240, financedNum: 100}),
+       (:Program {id: "PSI", name: "Softverski inzenjering", level: "Undergradute", totalNum: 100, financedNum: 60})
+
+
+MATCH (t:Teacher), (c:Course) WHERE t.id=2 AND c.id=1 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=3 AND c.id=1 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=4 AND c.id=1 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=5 AND c.id=2 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=5 AND c.id=3 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=7 AND c.id=4 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=8 AND c.id=5 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=1 AND c.id=1 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=1 AND c.id=6 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=2 AND c.id=4 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=2 AND c.id=3 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=2 AND c.id=4 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=5 AND c.id=5 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=5 AND c.id=5 CREATE (t)-[teach:TEACHING]->(c)
+MATCH (t:Teacher), (c:Course) WHERE t.id=6 AND c.id=1 CREATE (t)-[teach:TEACHING]->(c)
+
+MATCH (s:Student), (p:Program) WHERE s.index="IN3-2020" AND p.id="IN" CREATE (s)-[:ENROLLED]->(p)
+MATCH (s:Student), (p:Program) WHERE s.index="IN5-2020" AND p.id="IN" CREATE (s)-[:ENROLLED]->(p)
+MATCH (s:Student), (p:Program) WHERE s.index="IN6-2020" AND p.id="IN" CREATE (s)-[:ENROLLED]->(p)
+MATCH (s:Student), (p:Program) WHERE s.index="IN10-2020" AND p.id="RA" CREATE (s)-[:ENROLLED]->(p)
+MATCH (s:Student), (p:Program) WHERE s.index="IN8-2020" AND p.id="RA" CREATE (s)-[:ENROLLED]->(p)
+
+
+MATCH (p:Program), (c:Course) WHERE p.id="IN" AND c.id=2 CREATE (p)-[:CONTAINS]->(c)
+MATCH (p:Program), (c:Course) WHERE p.id="IN" AND c.id=3 CREATE (p)-[:CONTAINS]->(c)
+MATCH (p:Program), (c:Course) WHERE p.id="IN" AND c.id=1 CREATE (p)-[:CONTAINS]->(c)
+MATCH (p:Program), (c:Course) WHERE p.id="IN" AND c.id=5 CREATE (p)-[:CONTAINS]->(c)
+MATCH (p:Program), (c:Course) WHERE p.id="RA" AND c.id=3 CREATE (p)-[:CONTAINS]->(c)
+
+
+MATCH (s:Student), (c:Course) WHERE s.index="IN3-2020" AND c.id=1 CREATE (s)-[:COMPLETED {grade: 7, date: "12-5-2021"}]->(c)
+MATCH (s:Student), (c:Course) WHERE s.index="IN4-2020" AND c.id=1 CREATE (s)-[:COMPLETED {grade: 8, date: "11-3-2020"}]->(c)
+MATCH (s:Student), (c:Course) WHERE s.index="IN5-2020" AND c.id=1 CREATE (s)-[:COMPLETED {grade: 7, date: "4-6-2019"}]->(c)
+MATCH (s:Student), (c:Course) WHERE s.index="IN3-2020" AND c.id=3 CREATE (s)-[:COMPLETED {grade: 6, date: "12-2-2022"}]->(c)
+MATCH (s:Student), (c:Course) WHERE s.index="IN7-2020" AND c.id=4 CREATE (s)-[:COMPLETED {grade: 7, date: "6-1-2021"}]->(c)
+MATCH (s:Student), (c:Course) WHERE s.index="IN4-2020" AND c.id=3 CREATE (s)-[:COMPLETED {grade: 10, date: "2-1-2021"}]->(c)
+
 
 
 MATCH (s:Student), (c:Course)
@@ -125,15 +180,6 @@ set com.date = "12-04-2020"
 set com.grade = toInteger(rand() * 5) + 6
 
 
-CREATE (:Teacher {id: 1, firstName: "Prof1", lastName: "Prz1", email: "john.doe@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Applied Computer Science"}),
-       (:Teacher {id: 2, firstName: "Prof2", lastName: "Prz2", email: "jane.smith@example.com", position: "Assistant Professor", organizationalUnit: "Chair of Automatic Control"}),
-       (:Teacher {id: 3, firstName: "Prof3", lastName: "Prz3", email: "alice.johnson@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
-       (:Teacher {id: 4, firstName: "Prof4", lastName: "Prz4", email: "bob.williams@example.com", position: "Associate Professor", organizationalUnit: "Chair of Automatic Control"}),
-       (:Teacher {id: 5, firstName: "Prof5", lastName: "Prz5", email: "eve.brown@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"}),
-       (:Teacher {id: 6, firstName: "Prof6", lastName: "Prz6", email: "michael.davis@example.com", position: "Associate Professor", organizationalUnit: "Chair of Applied Computer Science"}),
-       (:Teacher {id: 7, firstName: "Prof7", lastName: "Prz7", email: "emily.miller@example.com", position: "Full Professor", organizationalUnit: "Chair of Applied Computer Science"}),
-       (:Teacher {id: 8, firstName: "Prof8", lastName: "Prz8", email: "david.wilson@example.com", position: "Full Professor", organizationalUnit: "Chair of Automatic Control"})
-
 
 MATCH (t:Teacher), (c:Course)
 WHERE t.id IN [2, 4] AND c.id IN [1,5,3]
@@ -145,10 +191,7 @@ WHERE t.id IN [5, 4] AND s.index IN ["IN10-2020", "IN4-2020"]
 CREATE (t)-[m:MENTORING]->(s)
 
 
-CREATE (:Program {id: "IN", name: "Informacioni inzenjering", level: "Undergradute", totalNum: 240, financedNum: 100}),
-       (:Program {id: "RA", name: "Racunarstvo i automatika", level: "Undergradute", totalNum: 60, financedNum: 15}),
-       (:Program {id: "EE", name: "Energetika i telekomunikacije", level: "Undergradute", totalNum: 240, financedNum: 100}),
-       (:Program {id: "PSI", name: "Softverski inzenjering", level: "Undergradute", totalNum: 100, financedNum: 60})
+
 
 
 

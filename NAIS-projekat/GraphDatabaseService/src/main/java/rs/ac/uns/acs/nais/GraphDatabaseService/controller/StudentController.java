@@ -13,11 +13,15 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Student;
 import rs.ac.uns.acs.nais.GraphDatabaseService.service.impl.StudentService;
+import rs.ac.uns.acs.nais.GraphDatabaseService.model.CompletedCourse;
+import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Program;
 import rs.ac.uns.acs.nais.GraphDatabaseService.repository.ProgramRepository;
 import rs.ac.uns.acs.nais.GraphDatabaseService.service.ICourseService;
+import rs.ac.uns.acs.nais.GraphDatabaseService.service.impl.ProgramService;
 
 import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CompletedCourseDTO;
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.StudentProgressDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -29,8 +33,11 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
+    private final ProgramService programService;
+
+    public StudentController(StudentService studentService, ProgramService programService) {
         this.studentService = studentService;
+        this.programService = programService;
     }
 
     @GetMapping("")
@@ -96,4 +103,61 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("updateGrade/{index}/{courseId}")
+    public ResponseEntity<CompletedCourse> updateGrade(@PathVariable String index, @PathVariable Long courseId, @RequestParam int grade){
+        if(studentService.updateGrade(index, courseId, grade)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+    @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> exportPdf(@RequestParam String programId) {
+        List<Student> students = studentService.findAllFromProgram(programId);
+        Program p = programService.findOneById(programId);
+        try {
+            byte[] pdfContents = studentService.export(students, p.getName());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "courses.pdf");
+
+            return ResponseEntity.ok()
+                                 .headers(headers)
+                                 .body(pdfContents);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/recommendedTutors")
+    public ResponseEntity<List<StudentProgressDTO>> getTopStudentProgress() {
+        List<StudentProgressDTO> students = studentService.getTopStudents();
+        if (students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(students);
+        }
+    }
+
+
+
+    @GetMapping(value = "/export-pdf-complex", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> exportPdf() {
+        List<StudentProgressDTO> students = studentService.getTopStudents();
+        try {
+            byte[] pdfContents = studentService.exportComplex(students);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "complexStudents.pdf");
+
+            return ResponseEntity.ok()
+                                 .headers(headers)
+                                 .body(pdfContents);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

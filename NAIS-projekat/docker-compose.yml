@@ -19,7 +19,7 @@ services:
     depends_on:
       - eureka-server
       #- elastic-search-service
-      # - relational-service
+      - relational-service
       # - document-service
       - graph-service
       #- timeseries-service
@@ -29,21 +29,21 @@ services:
     ports:
       - "9000:9000"
 
-  # relational-service:
-  #   build:
-  #     context: ./RelationalDatabaseService
-  #     dockerfile: Dockerfile
-  #   image: relational-service:latest
-  #   depends_on:
-  #     - postgresdb
-  #     - eureka-server
-  #   environment:
-  #     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-  #     SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresdb:5432/nais"
-  #     SPRING_DATASOURCE_USERNAME: nais
-  #     SPRING_DATASOURCE_PASSWORD: nais
-  #   ports:
-  #     - "9030:9030"
+  relational-service:
+    build:
+      context: ./RelationalDatabaseService
+      dockerfile: Dockerfile
+    image: relational-service:latest
+    depends_on:
+      - postgresdb
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresdb:5432/nais"
+      SPRING_DATASOURCE_USERNAME: nais
+      SPRING_DATASOURCE_PASSWORD: nais
+    ports:
+      - "9030:9030"
 
   # document-service:
   #   build:
@@ -78,13 +78,13 @@ services:
   #   ports:
   #     - "9050:9050"
 
-  # postgresdb:
-  #   image: postgres:latest
-  #   environment:
-  #     POSTGRES_USER: "nais"
-  #     POSTGRES_PASSWORD: "nais"
-  #   volumes:
-  #     - data:/var/lib/postgres
+  postgresdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: "nais"
+      POSTGRES_PASSWORD: "nais"
+    volumes:
+      - data:/var/lib/postgres
 
   # cassandradb:
   #   image: cassandra:latest

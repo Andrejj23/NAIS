@@ -11,7 +11,12 @@ import java.io.IOException;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
+
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseDTO;
+import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseRecommendationDTO;
+import rs.ac.uns.acs.nais.GraphDatabaseService.model.CompletedCourse;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
+import rs.ac.uns.acs.nais.GraphDatabaseService.model.Product;
 import rs.ac.uns.acs.nais.GraphDatabaseService.service.impl.CourseService;
 
 import java.io.ByteArrayOutputStream;
@@ -65,6 +70,41 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("deactivate")
+    public ResponseEntity<String> deactivateCourse(@RequestParam int threshold){
+        int number = courseService.deactivateCourse(threshold);
+            return new ResponseEntity<>("Number of deactivated courses is: " + number , HttpStatus.OK);
+    }
+
+    @GetMapping("/recommendations")
+    public List<Course> recommendCourses(@RequestParam String index) {
+        return courseService.getCourseRecommendations(index);
+    }
+
+
+    @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> exportPdf() {
+        List<Course> courses = courseService.findAll();
+        try {
+            byte[] pdfContents = courseService.export(courses);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "courses.pdf");
+
+            return ResponseEntity.ok()
+                                 .headers(headers)
+                                 .body(pdfContents);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/proba/{courseId}")
+    public CourseDTO test(@PathVariable Long courseId) {
+        return courseService.gettt(courseId);
     }
 
 }
