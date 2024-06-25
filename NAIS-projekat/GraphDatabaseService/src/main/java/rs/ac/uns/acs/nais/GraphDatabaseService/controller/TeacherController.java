@@ -18,6 +18,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teachers.json")
@@ -90,6 +91,32 @@ public class TeacherController {
         } else {
             return ResponseEntity.ok(topTeachers);
         }
+    }
+
+    @GetMapping("/findRegularProfessorsWithCoursesAndAvgESPB")
+    public ResponseEntity<Iterable<Map<String, Object>>> findRegularProfessorsWithCoursesAndAvgESPB() {
+        Iterable<Map<String, Object>> results = teacherService.findRegularProfessorsWithCoursesAndAvgESPB();
+        if(results!=null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/pos/{id}")
+    public ResponseEntity<Teacher> updateTeacherPosition(@PathVariable("id") Long id, @RequestParam("position") String position){
+        if(teacherService.updateTeacherPosition(id, position)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/findRegularProfessorsWithCoursesAndStudentsWhoPassed")
+    public ResponseEntity<Iterable<Map<String, Object>>> findRegularProfessorsWithCoursesAndStudentsWhoPassed() {
+        Iterable<Map<String, Object>> results = teacherService.findRegularProfessorsWithCoursesAndStudentsWhoPassed();
+        if(results!=null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.awt.*;
 
@@ -225,6 +226,17 @@ public class CourseService implements ICourseService {
                       .one()
                       .orElse(new CourseDTO("Default Description"));  // Provide a default value if none is found
     }
+
+
+    @Override
+    public List<Course> findAllActiveByType(String type){
+        return courseRepository.findAllActiveByType(type);
+}
+
+    @Override
+    public Iterable<Map<String, Object>> findAverageESPBByType(){
+        return courseRepository.findAverageESPBByType();
+}
 
 
 }

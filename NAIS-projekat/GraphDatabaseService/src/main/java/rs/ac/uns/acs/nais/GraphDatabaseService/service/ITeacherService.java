@@ -6,6 +6,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ITeacherService {
@@ -25,5 +26,11 @@ public interface ITeacherService {
     boolean updateTeacher(Long id, String email);
 
     List<TeacherRecommendationDTO> recommendTeachersBySuccessRate();
+
+    Iterable<Map<String, Object>> findRegularProfessorsWithCoursesAndAvgESPB();
+
+    Iterable<Map<String, Object>> findRegularProfessorsWithCoursesAndStudentsWhoPassed();
+
+    boolean updateTeacherPosition(Long id, String position);
 
 }

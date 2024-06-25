@@ -462,4 +462,15 @@ public class StudentService implements IStudentService{
     }
 
 
+    @Override
+    public List<Student> findAllFirstTimeFourthYearBudgetStudents(){
+        return studentRepository.findAllFirstTimeFourthYearBudgetStudents();
+    }
+
+    @Override
+    public Iterable<Map<String, Object>> findNumberOfBudgetStudentsByStudyYear(){
+        return studentRepository.findNumberOfBudgetStudentsByStudyYear();
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package rs.ac.uns.acs.nais.GraphDatabaseService.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -22,6 +23,13 @@ public interface StudentRepository extends Neo4jRepository<Student, String>{
     @Query("MATCH (s:Student) - [:ENROLLED] -> (p:Program {id: $programId}) return s")
     List<Student> findAllFromProgrm(String programId);
 
+    //Prikaz svih studenata 4 godine koji su na budzetu i prvi put su upisali 4 godinu
+    @Query("MATCH (s:Student) WHERE s.yearOfStudy=4 AND s.methodOfFinancing='BUDGET' and s.numberOfEnrollingYear=1 RETURN s")
+    List<Student> findAllFirstTimeFourthYearBudgetStudents();
 
+    //Prikaz broja budzetskih studenata po godini studija
+    @Query("MATCH (s:Student) WHERE s.methodOfFinancing='BUDGET' WITH s.yearOfStudy AS yearOfStudy, count(s) AS numOfBudgetStudents" +
+    "RETURN {yearOfStudy: yearOfStudy, numOfBudgetStudents: numOfBudgetStudents}")
+    Iterable<Map<String, Object>> findNumberOfBudgetStudentsByStudyYear();
 
 }

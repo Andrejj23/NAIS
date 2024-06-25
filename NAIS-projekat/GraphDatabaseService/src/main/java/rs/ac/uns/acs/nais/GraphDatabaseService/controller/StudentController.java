@@ -25,6 +25,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.dto.StudentProgressDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -159,5 +160,24 @@ public class StudentController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+
+    @GetMapping("findAllFirstTimeFourthYearBudgetStudents")
+    public ResponseEntity<List<Student>> findAllFirstTimeFourthYearBudgetStudents(){
+        List<Student> students = studentService.findAllFirstTimeFourthYearBudgetStudents();
+        if(students != null){
+            return new ResponseEntity<>(students, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("findNumberOfBudgetStudentsByStudyYear")
+    public ResponseEntity<Iterable<Map<String, Object>>> findNumberOfBudgetStudentsByStudyYear(){
+        Iterable<Map<String, Object>> results = studentService.findNumberOfBudgetStudentsByStudyYear();
+        if(results != null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

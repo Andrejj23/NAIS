@@ -21,6 +21,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.service.impl.CourseService;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/courses.json")
@@ -106,5 +107,27 @@ public class CourseController {
     public CourseDTO test(@PathVariable Long courseId) {
         return courseService.gettt(courseId);
     }
+
+    @GetMapping("/findAllActiveByType/{type}")
+    public ResponseEntity<List<Course>> findAllActiveByType(@PathVariable String type) {
+        List<Course> courses = courseService.findAllActiveByType(type);
+        if(courses != null){
+            return new ResponseEntity<>(courses, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/findAverageESPBByType")
+    public ResponseEntity<Iterable<Map<String, Object>>> findAverageESPBByType() {
+        Iterable<Map<String, Object>> results = courseService.findAverageESPBByType();
+        if(results != null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
 }

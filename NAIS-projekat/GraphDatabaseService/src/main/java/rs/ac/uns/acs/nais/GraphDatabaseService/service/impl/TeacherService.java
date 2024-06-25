@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.awt.*;
 
@@ -114,6 +115,27 @@ public class TeacherService implements ITeacherService {
                           .all();
 
         return new ArrayList<>(result);
+    }
+
+    @Override
+    public Iterable<Map<String, Object>> findRegularProfessorsWithCoursesAndAvgESPB(){
+        return teacherRepository.findRegularProfessorsWithCoursesAndAvgESPB();
+    }
+
+    @Override
+    public Iterable<Map<String, Object>> findRegularProfessorsWithCoursesAndStudentsWhoPassed(){
+        return teacherRepository.findRegularProfessorsWithCoursesAndStudentsWhoPassed();
+    }
+
+    @Override
+    public boolean updateTeacherPosition(Long id, String position) {
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        if(teacher.isPresent()){
+            teacher.get().setPosition(position);
+            teacherRepository.save(teacher.get());
+            return true;
+        }
+        return false;
     }
 
 }

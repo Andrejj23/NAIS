@@ -7,6 +7,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.model.Product;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.awt.image.BufferedImage;
 
 
@@ -31,5 +32,9 @@ public interface ICourseService {
     //BufferedImage createPieChart(List<Course> courses);
 
     CourseDTO gettt(Long courseId);
+
+    List<Course> findAllActiveByType(String type);
+
+    Iterable<Map<String, Object>> findAverageESPBByType();
 
 }

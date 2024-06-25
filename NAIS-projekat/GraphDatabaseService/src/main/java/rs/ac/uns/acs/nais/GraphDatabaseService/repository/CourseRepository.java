@@ -9,6 +9,7 @@ import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseRecommendationDTO;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Course;
 import rs.ac.uns.acs.nais.GraphDatabaseService.model.Teacher;
 import java.util.List;
+import java.util.Map;
 
 import rs.ac.uns.acs.nais.GraphDatabaseService.dto.CourseDTO;;
 
@@ -38,7 +39,15 @@ public interface CourseRepository extends Neo4jRepository<Course, Long> {
     
     /*@Query("MATCH (c:Course {id:2}) return c.description AS description")
     CourseDTO finddd();  */     
-    
+
+    // Prikaz predmeta odredjenog tipa koji su aktivni
+    @Query("MATCH (c:Course) WHERE c.isActive=true AND c.type=$type RETURN c")
+    List<Course> findAllActiveByType(String type);
+
+    //Prikaz prosecnog broja espb bodova po tipu predmeta, za predmete koji su aktivni
+    @Query("MATCH (c:Course) WHERE c.isActive=true WITH c.type AS courseType, avg(c.espb) AS averageEspb RETURN {type: courseType, avgESPB: averageEspb}")
+    Iterable<Map<String, Object>> findAverageESPBByType();
+
 
 
 

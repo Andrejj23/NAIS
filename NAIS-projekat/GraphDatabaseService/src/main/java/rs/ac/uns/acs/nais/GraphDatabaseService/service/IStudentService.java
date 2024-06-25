@@ -39,4 +39,8 @@ public interface IStudentService {
 
     public byte[] exportComplex(List<StudentProgressDTO> studentProgress) throws IOException;
 
+    List<Student> findAllFirstTimeFourthYearBudgetStudents();
+
+    Iterable<Map<String, Object>> findNumberOfBudgetStudentsByStudyYear();
+
 }
