@@ -400,7 +400,7 @@ public class StudentService implements IStudentService{
 
         document.add(new Paragraph("\n\n"));
 
-        Paragraph slozenaSekcija = new Paragraph("Complex section of report: Identifying potential tutors among final year students", FontFactory.getFont(FontFactory.HELVETICA, 12));
+        Paragraph slozenaSekcija = new Paragraph("Complex section of report part I: Identifying potential tutors among final year students", FontFactory.getFont(FontFactory.HELVETICA, 12));
         slozenaSekcija.setAlignment(Element.ALIGN_LEFT);
         document.add(slozenaSekcija);
 
@@ -454,7 +454,72 @@ public class StudentService implements IStudentService{
             
         }
 
-        document.add(reportTable);        
+        document.add(reportTable);   
+        
+        document.add(new Paragraph("\n\n"));
+
+        Paragraph slozenaSekcija1 = new Paragraph("Complex section of report part II: Recommended Courses For these potential tutors", FontFactory.getFont(FontFactory.HELVETICA, 12));
+        slozenaSekcija1.setAlignment(Element.ALIGN_LEFT);
+        document.add(slozenaSekcija1);
+
+        
+
+        for (StudentProgressDTO dto : studentProgress) {
+
+            document.add(new Paragraph("\n\n"));
+
+            Paragraph subtitle1 = new Paragraph("Suggested Courses for: " + dto.getStudent().getIndex(), FontFactory.getFont(FontFactory.HELVETICA, 12));
+            subtitle1.setAlignment(Element.ALIGN_LEFT);
+            document.add(subtitle1);
+
+            document.add(new Paragraph("\n"));
+
+            PdfPTable reportTable1 = new PdfPTable(3);
+            reportTable1.setWidthPercentage(100);
+
+            Font headerFont1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Font.BOLD);
+            PdfPCell headerCell11 = new PdfPCell(new Paragraph("NAME", headerFont1));
+            PdfPCell headerCell22 = new PdfPCell(new Paragraph("TYPE", headerFont1));
+            PdfPCell headerCell33 = new PdfPCell(new Paragraph("ESPB", headerFont1));
+
+            headerCell11.setBackgroundColor(new Color(110, 231, 234, 255));
+            headerCell22.setBackgroundColor(new Color(110, 231, 234, 255));
+            headerCell33.setBackgroundColor(new Color(110, 231, 234, 255));
+
+            headerCell11.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell22.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell33.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            reportTable1.addCell(headerCell11);
+            reportTable1.addCell(headerCell22);
+            reportTable1.addCell(headerCell33);
+
+            if(courseRepository.findRecommendedCourses(dto.getStudent().getIndex()).size()==0){
+                Paragraph slozenaSekcija11 = new Paragraph("There are no suggested courses for this student", FontFactory.getFont(FontFactory.HELVETICA, 12));
+                slozenaSekcija11.setAlignment(Element.ALIGN_LEFT);
+                document.add(slozenaSekcija11);
+            }else{
+
+                for (Course course : courseRepository.findRecommendedCourses(dto.getStudent().getIndex())) {
+
+                    reportTable1.setWidthPercentage(100);
+                    reportTable1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+                    reportTable1.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+    
+                    reportTable1.addCell(course.getDescription());
+                    reportTable1.addCell(course.getType());
+                    reportTable1.addCell(String.valueOf(course.getEspb()));
+                    
+                }
+
+                document.add(reportTable1); 
+
+
+            }
+            
+        }
+
+
 
         document.close();
 

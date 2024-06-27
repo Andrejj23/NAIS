@@ -104,7 +104,7 @@ public class TeacherService implements ITeacherService {
             WITH t, AVG(toFloat(studentsCompleted) / studentsEnrolled) AS avgSuccessRate
             RETURN t.firstName AS teacher, avgSuccessRate
             ORDER BY avgSuccessRate DESC
-            LIMIT 2
+            LIMIT 5
             """;
 
         Collection<TeacherRecommendationDTO> result =  neo4jClient.query(cypherQuery)
